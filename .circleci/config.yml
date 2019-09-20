@@ -1,15 +1,5 @@
 version: 2
 jobs:
-  build:
-    docker:
-      - image: circleci/node:10.15.1
-    working_directory: ~/repo
-    steps:
-      - checkout
-      - run:
-          name: Install Dependencies
-          command:  |
-              npm install
   test:
     docker:
       - image: circleci/node:10.15.1-browsers
@@ -17,8 +7,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Repo Check 1
-          command: npm run test
+          name: Install Dependencies
+          command:  |
+              npm install
+              npm run test
       - store_artifacts:
           path: /target/site/serenity
   
@@ -27,4 +19,3 @@ workflows:
   build_and_test_e2e_local_or_remote-e2e:
     jobs:
       - build
-      - test
